@@ -28,6 +28,19 @@ def test(id,type):
         print ("Неверно.", answer, "," , r)
         return 0
 
+def read_sqlite_table(results):
+    sqlite_select_query = """SELECT * from sqlitedb_results"""
+    cursor.execute(sqlite_select_results)
+    results = cursor.fetchall()
+    print("Всего строк:  ", len(results))
+    print("Вывод каждой строки")
+    for row in results:
+        print("user:", row[0])
+        print("word_id:", row[1])
+        print("result:", row[2])
+        print("date_time:", row[3])
+        print("type:", row[4], end="\n\n")
+    
 print ("Введите своё имя.")
 name = input()
 print ("Введите количество вопросов.")
@@ -35,6 +48,7 @@ full = input ()
 right = 0
 print ("Введите направление перевода eng_ru  или ru_eng.")
 type = input ()
+   
 
 for i in range(0, int(full)):
     a = random.randint (93, 1095)
@@ -44,6 +58,14 @@ for i in range(0, int(full)):
     
     cur.execute(f"INSERT INTO results(user, word_id, result, date_time, type) VALUES('{name}', '{a}', '{result}', '{now}', '{type}')  RETURNING id;")
     row = cur.fetchone()
-print (f"Вы ответили правильно на {right} вопрос из {full}. ")
+
+if right%10 == 1:
+    v = "вопрос"
+elif right%10 >= 2 and right%100 <= 4:
+    v = "вопроса"
+else:
+    v = "вопросов"
+    
+print (f"Вы ответили правильно на {right} {v} из {full}. ")
 conn.commit()
 
