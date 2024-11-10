@@ -60,8 +60,8 @@ cur.execute(sqlite_select_query)
 results = cur.fetchall()
 cur.close()
 
-c=right%int(full)*10
-k=100-c
+r=right%int(full)*10
+k=100-r
 
 print ("Твой працент правильных ответов", r,"%")
 print ("Твой працент неправильных ответов", k,"%")
